@@ -8,7 +8,7 @@
         <p class="text-sm opacity-60 mt-1">Manage your daily priorities and workflow.</p>
       </div>
       <a href="{% url 'todo:task_create' %}">
-        <c-lb.button variant="primary">
+        <c-lb.button class="bg-teal-600 text-teal-50">
           + Add New Task
         </c-lb.button>
       </a>
@@ -16,15 +16,15 @@
 
     <!-- Quick Stats Cards -->
     <div class="grid grid-cols-3 gap-4">
-      <div class="bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm text-center">
+      <div class="bg-base-100 p-4 rounded-xl border border-base-200 text-center">
         <span id="total-count" class="text-2xl font-bold">{{ total_count }}</span>
         <span class="block text-xs opacity-60 mt-1">Total Tasks</span>
       </div>
-      <div class="bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm text-center">
+      <div class="bg-base-100 p-4 rounded-xl border border-base-200 text-center">
         <span id="pending-count" class="text-2xl font-bold text-warning">{{ pending_count }}</span>
         <span class="block text-xs opacity-60 mt-1">Pending</span>
       </div>
-      <div class="bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm text-center">
+      <div class="bg-base-100 p-4 rounded-xl border border-base-200 text-center">
         <span id="completed-count" class="text-2xl font-bold text-success">{{ completed_count }}</span>
         <span class="block text-xs opacity-60 mt-1">Completed</span>
       </div>
@@ -35,12 +35,12 @@
       {% for task in tasks %}
         {% include "todo/partials/task_item.html" %}
       {% empty %}
-        <c-lb.alert variant="info" class="p-6 text-center">
+        <div class="p-4 border border-gray-100 mt-2 text-center">
           <div>
             <p class="font-medium text-lg">No tasks found!</p>
             <p class="text-sm opacity-70 mt-1">You're all caught up. Click "+ Add New Task" above to get started.</p>
           </div>
-        </c-lb.alert>
+        </div>
       {% endfor %}
     </div>
 

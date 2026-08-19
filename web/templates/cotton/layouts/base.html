@@ -20,31 +20,51 @@
 
 <body class="min-h-screen bg-base-100 text-base-content grainy-bg antialiased"
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    <nav class="navbar bg-base-100 border-b border-base-200 px-6 justify-between">
+    <c-lb.navbar class="bg-base-100 border-b border-base-200 px-6 rounded-box">
         <!-- Brand Logo / Name -->
-        <a href="{% url 'todo:task_list' %}" class="text-xl font-bold tracking-tight flex items-center gap-2">
-            <span>📝</span> TaskFlow
-        </a>
+        <c-lb.navbar.start>
+            <a href="{% url 'web:index' %}" class="text-xl font-bold tracking-tight flex items-center gap-2">    
+                <c-lb.button btnStyle="ghost" size="lg">
+                    <c-lbi n="rmx.apps" w="1em" h="1em" />
+                    TaskFlow
+                </c-lb.button>
+            </a>    
+        </c-lb.navbar.start>
 
         <!-- User Menu / Actions -->
-        <div class="flex items-center gap-4">
+        <c-lb.navbar.center>
             {% if user.is_authenticated %}
-            <span class="text-sm opacity-70">Hello, <strong>{{ user.username }}</strong></span>
-
+                <c-lb.menu direction="horizontal">
+                    <c-lb.menu.item href="{% url 'schedule:schedule_list' %}">
+                        <c-lbi w="18" h="18" n="rmx.gallery-view"></c-lbi>
+                        Schedules</c-lb.menu.item>
+                    <c-lb.menu.item href="{% url 'todo:task_list' %}">
+                        <c-lbi w="18" h="18" n="rmx.list-indefinite"></c-lbi>
+                        Tasks</c-lb.menu.item>
+                </c-lb.menu>
+            {% endif %}
+        </c-lb.navbar.center>
+        <c-lb.navbar.end>
+            {% if user.is_authenticated %}
+            <span class="text-sm opacity-70 mr-4">Olá, <strong>{{ user.username }}</strong></span>         
             <!-- Logout Form (POST required in modern Django) -->
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <c-lb.button type="submit" variant="ghost" size="sm">
+                    <c-lbi w="18" h="18" n="rmx.logout-box-r"></c-lbi>
                     Log Out
                 </c-lb.button>
             </form>
             {% else %}
             <a href="{% url 'login' %}">
-                <c-lb.button variant="primary" size="sm">Log In</c-lb.button>
+                <c-lb.button variant="primary" size="sm">
+                    <c-lbi w="18" h="18" n="rmx.login-box"></c-lbi>
+                    Log In
+                </c-lb.button>
             </a>
             {% endif %}
-        </div>
-    </nav>
+        </c-lb.navbar.end>
+    </c-lb.navbar>
     {% csrf_token %}
     {{ slot }}
 </body>

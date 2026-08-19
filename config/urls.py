@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),  # Provides /accounts/login/, /accounts/logout/, etc.
     path('todo/', include('apps.todo.urls', namespace='todo')),
+    path('schedule/', include('apps.schedule.urls', namespace='schedule')),
 ]

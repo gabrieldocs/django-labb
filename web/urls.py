@@ -8,6 +8,5 @@ app_name = "web"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("example/", views.example, name="example"),
     path("set-theme/", set_theme_view, name="set_theme"),
 ]

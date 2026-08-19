@@ -6,6 +6,19 @@
     <form method="post" class="space-y-4">
       {% csrf_token %}
 
+      {% if form.non_field_errors %}
+        <div class="alert alert-error text-sm shadow-sm">
+          <span>{{ form.non_field_errors.0 }}</span>
+        </div>
+      {% endif %}
+      <!-- Schedule Input -->
+       <div>
+        <label class="label"><span class="label-text">Schedule</span></label>
+        {{ form.schedule}}
+        {% if form.schedule.errors %}
+        <p class="text-error text-xs mt-1">{{ form.schedule.errors.0 }}</p>
+        {% endif %}
+       </div>
       <!-- Title Input -->
       <div>
         <label class="label"><span class="label-text">Task Title</span></label>
@@ -20,6 +33,15 @@
         <label class="label"><span class="label-text">Description</span></label>
         {{ form.description }}
       </div>
+
+      <!-- Duration Input -->
+       <div>
+        <label class="label"><span class="label-text">Duration in minutes</span></label>
+        {{ form.duration_minutes }}
+        {% if form.duration_minutes.errors %}
+        <p class="text-error text-xs mt-1">{{ form.duration_minutes.errors.0 }}</p>
+        {% endif %}
+       </div>
 
       <!-- Completed Checkbox (only show on edit) -->
       {% if form.completed %}

@@ -1,22 +1,36 @@
 {% load lb_tags %}
 
-<c-vars
-    :themeOptions="{
+<!-- <c-vars :themeOptions="{
         '__system__': 'System',
         'labb-light': 'Light',
         'labb-dark': 'Dark',
         'light': 'Daisy Light',
         'dark': 'Daisy Dark'
-    }"
-/>
+    }" />
+ -->
+<!-- {% labb_theme_val as theme %} -->
 
-{% labb_theme_val as theme %}
-
-<c-layouts.base title="Welcome">
+<c-layouts.base title="Task Flow">
     <c-lb.card>
         <c-lb.card.body>
-            <h1 class="font-bold text-2xl">Welcome</h1>
-            <p>This is a sample page created using Django cotton and Labb.</p>
+            <div class="grid grid-flow-col grid-rows-3 gap-4">
+                <div class="row-span-3 bg-blue-100 p-2">
+                    <h1 class="font-bold text-2xl">Schedule</h1>
+                    <p>Create and find out about the existing schedules accross the platform. 
+                        Use a schedule to
+                        organize self and balance tasks priorities.
+                    </p>
+                    <c-lb.button varian="success">Create schedule</c-lb.button>
+                </div>
+                <div class="col-span-2 bg-purple-100 p-2">
+                    <h1 class="text-2xl">Create task</h1>
+                    <p>Add minor errands in order to visualize the backlog.</p>
+                </div>
+                <div class="col-span-2 row-span-2 bg-teal-100 p-2">
+                    <h1 class="text-2xl">Exchange</h1>
+                    <p>Move time resources between tasks and schedules.</p>
+                </div>
+            </div>
         </c-lb.card.body>
     </c-lb.card>
-</c-layouts.base>   
+</c-layouts.base>

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django_cotton",
     "web",
     "apps.todo",
+    "apps.schedule",
 ]
 
 MIDDLEWARE = [

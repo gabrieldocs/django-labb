@@ -1,8 +1,11 @@
 /* labb CSS Setup for Tailwind CSS 4 + DaisyUI 5 */
 
 /* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap'); */
 
+/* @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght,MONO@0,300..800,1;1,300..800,1&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 /* Override Tailwind's @property to allow shadow color inheritance for labb */
 @property --tw-shadow-color {
   syntax: "*";
@@ -12,13 +15,18 @@
 @plugin "daisyui" {
   themes: light, dark;
 }
+/* 1. Global Tailwind v4 Font Configuration */
+@theme {
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 
 @plugin "daisyui/theme" {
   name: "labb-light";
   default: true;
   prefersdark: false;
   color-scheme: light;
-
+  
   --color-base-100: oklch(100% 0 0);
   --color-base-200: oklch(96% 0.002 247);
   --color-base-300: oklch(89% 0.003 247);
@@ -148,4 +156,3 @@
     @apply bg-base-content/8 border-base-content/15;
   }
 }
-
