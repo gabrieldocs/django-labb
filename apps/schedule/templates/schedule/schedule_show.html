@@ -1,0 +1,26 @@
+<c-layouts.base>
+    <div class="mx-auto max-w-4xl mt-4 mb-4">
+        <c-lb.button variant="link">
+            <c-lbi n="rmx.arrow-left" h="18" w="18"/>
+            <span>Retornar</span>
+        </c-lb.button>
+        <h1 class="text-2xl font-bold">Details of the {{ title }}</h1>
+        {% if schedule %}
+            <h1 class="text-2xl text-purple-500 flex">
+                {{ schedule.title }} <span><c-lbi n="rmx.time" w="24" h="24"/></span> {{ schedule.total_minutes }}m</h1>
+            </span>
+            <small class="text-secondary">{{ schedule.created_at }}</small>
+            <p class="text-sm text-secondary">{{ schedule.description }}</p>
+
+            <a href="{% url 'schedule:schedule_update' schedule.id %}">
+                <c-lb.button class="bg-purple-500 text-purple-50 mt-4">
+                    <c-lbi n="rmx.edit" w="24" h="24"/> Edit schedule
+                </c-lb.button>
+            </a>
+
+            {% for task in schedule.tasks.all %}
+                <p>{{ task }}</p>
+            {% endfor %}
+        {% endif%}
+    </div>
+</c-layouts.base>

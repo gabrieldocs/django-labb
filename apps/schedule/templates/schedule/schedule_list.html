@@ -1,3 +1,26 @@
 <c-layouts.base title="Schedules">
-    <h1 class="text-2xl">No schedules yet.</h1>
+    <div class="max-w-4xl mx-auto">
+        <div class="flex flex-col sm:flex-row justify-between items-start mb-4 mt-4">
+            <div class="">
+                <h1 class="text-3xl font-extrabold tracking-tight">My Schedules</h1>
+                <p class="text-sm opacity-60 mt-1">Manage your time-resources</p>
+            </div>
+            <a href="{% url 'schedule:schedule_create' %}">
+                <c-lb.button>
+                    <c-lbi w="18" h="18" n="rmx.add"></c-lbi>
+                    Add new schedule
+                </c-lb.button>
+            </a>
+        </div>
+        <div class="grid grid-row">
+            {% for schedule in schedules %}
+                {% include "schedule/partials/schedule_item.html" %}
+            {% empty%}
+                <div class="p-4 text-center h-full">
+                    <h1 class="text-2xl">No schedules yet.</h1>
+                    <p>Add new schedules to start or trigger a workflow.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </c-layouts.base>
