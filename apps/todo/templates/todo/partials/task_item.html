@@ -1,0 +1,46 @@
+<div id="task-{{ task.pk }}">
+  <c-lb.card class="bg-base-100 p-3 shadow-sm border border-base-200">
+    <div class="flex items-center justify-between">
+      <div>
+        <div class="flex items-center gap-2">
+          <h2 class="text-lg font-semibold {% if task.completed %}line-through opacity-60{% endif %}">
+            {{ task.title }}
+          </h2>
+          {% if task.completed %}
+            <c-lb.badge variant="success" size="sm">Completed</c-lb.badge>
+          {% endif %}
+        </div>
+        
+        {% if task.description %}
+          <p class="text-sm opacity-70 mt-1">{{ task.description }}</p>
+        {% endif %}
+
+        <!-- HTMX Toggle Checkbox -->
+        <div class="mt-2">
+          <input type="checkbox" 
+                 class="checkbox checkbox-primary checkbox-sm"
+                 hx-patch="{% url 'todo:task_toggle' task.pk %}"
+                 hx-target="#task-{{ task.pk }}"
+                 hx-swap="outerHTML"
+                 {% if task.completed %}checked{% endif %} />
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-2">
+        <a href="{% url 'todo:task_update' task.pk %}">
+          <c-lb.button variant="outline" size="sm">Edit</c-lb.button>
+        </a>
+        <c-lb.button variant="error" size="sm"
+                     hx-delete="{% url 'todo:task_delete' task.pk %}"
+                     hx-target="#task-{{ task.pk }}"
+                     hx-swap="outerHTML">
+          Delete
+        </c-lb.button>
+        <!-- <a href="{% url 'todo:task_delete' task.pk %}">
+          <c-lb.button variant="error" size="sm">Delete</c-lb.button>
+        </a> -->
+      </div>
+    </div>
+  </c-lb.card>
+</div>

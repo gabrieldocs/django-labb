@@ -1,0 +1,22 @@
+{% load lb_tags %}
+
+<c-vars
+    :themeOptions="{
+        '__system__': 'System',
+        'labb-light': 'Light',
+        'labb-dark': 'Dark',
+        'light': 'Daisy Light',
+        'dark': 'Daisy Dark'
+    }"
+/>
+
+{% labb_theme_val as theme %}
+
+<c-layouts.base title="Welcome">
+    <c-lb.card>
+        <c-lb.card.body>
+            <h1 class="font-bold text-2xl">Welcome</h1>
+            <p>This is a sample page created using Django cotton and Labb.</p>
+        </c-lb.card.body>
+    </c-lb.card>
+</c-layouts.base>   

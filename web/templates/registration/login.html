@@ -1,0 +1,35 @@
+<c-layouts.base>
+  <div class="min-h-[70vh] flex items-center justify-center p-4">
+    <div class="card w-full max-w-md bg-base-100 shadow-xl border border-base-200 p-8">
+      <h2 class="text-2xl font-bold text-center mb-6">Welcome Back</h2>
+
+      {% if form.errors %}
+        <c-lb.alert variant="error" class="mb-4">
+          Invalid username or password. Please try again.
+        </c-lb.alert>
+      {% endif %}
+
+      <form method="post" action="{% url 'login' %}" class="space-y-4">
+        {% csrf_token %}
+        
+        <div>
+          <label class="label"><span class="label-text font-medium">Username</span></label>
+          <input type="text" name="username" required autofocus 
+                 class="input input-bordered w-full" placeholder="Enter your username" />
+        </div>
+
+        <div>
+          <label class="label"><span class="label-text font-medium">Password</span></label>
+          <input type="password" name="password" required 
+                 class="input input-bordered w-full" placeholder="••••••••" />
+        </div>
+
+        <div class="pt-2">
+          <c-lb.button type="submit" variant="primary" class="w-full">
+            Log In
+          </c-lb.button>
+        </div>
+      </form>
+    </div>
+  </div>
+</c-layouts.base>

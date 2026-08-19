@@ -1,0 +1,4 @@
+# Python >=3.10
+django~=5.0
+labbui
+labbicons

@@ -1,0 +1,46 @@
+{% load lb_tags %}
+<c-layouts.base title="Example page">
+    <div class="w-full">
+        <c-lb.navbar class="bg-base-100 border border-base-200 rounded-box">
+            <c-lb.navbar.start>
+                <c-lb.button btnStyle="ghost" size="lg">
+                    <c-lbi n="rmx.apps" w="1em" h="1em" />
+                    My App
+                </c-lb.button>
+            </c-lb.navbar.start>
+            <c-lb.navbar.center class="hidden lg:flex">
+                <c-lb.menu direction="horizontal">
+                    <c-lb.menu.item href="/" title="Home">
+                        <c-lbi n="rmx.home" w="1em" h="1em" />
+                        Home
+                    </c-lb.menu.item>
+                    <c-lb.menu.item href="/about" title="About">
+                        <c-lbi n="rmx.info-i" w="1em" h="1em" />
+                        About
+                    </c-lb.menu.item>
+                </c-lb.menu>
+            </c-lb.navbar.center>
+            <c-lb.navbar.end>
+                <c-lb.button btnStyle="ghost" size="sm" class="lg:hidden">
+                    <c-lbi n="rmx.menu" w="1em" h="1em" />
+                    Menu
+                </c-lb.button>
+                <c-lb.button variant="primary" size="sm" class="hidden lg:flex">
+                    <c-lbi n="rmx.rocket" w="1em" h="1em" />
+                    Get Started
+                </c-lb.button>
+            </c-lb.navbar.end>
+        </c-lb.navbar>
+    </div>
+
+    <div class="p-8 rounded-lg shadow-md">
+        <c-lb.button variant="primary">Click me</c-lb.button>
+
+        <c-lb.card>
+            <c-lb.card.body>
+                <c-lb.card.title>Card Title</c-lb.card.title>
+                <p>This is a card body with some text content.</p>
+            </c-lb.card.body>
+        </c-lb.card>
+    </div>
+</c-layouts.base>

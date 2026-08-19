@@ -1,0 +1,48 @@
+<c-layouts.base>
+  <div class="max-w-4xl mx-auto p-6 space-y-6">
+    
+    <!-- Top Bar: Title & Primary Action -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div>
+        <h1 class="text-3xl font-extrabold tracking-tight">My Tasks</h1>
+        <p class="text-sm opacity-60 mt-1">Manage your daily priorities and workflow.</p>
+      </div>
+      <a href="{% url 'todo:task_create' %}">
+        <c-lb.button variant="primary">
+          + Add New Task
+        </c-lb.button>
+      </a>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="grid grid-cols-3 gap-4">
+      <div class="bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm text-center">
+        <span id="total-count" class="text-2xl font-bold">{{ total_count }}</span>
+        <span class="block text-xs opacity-60 mt-1">Total Tasks</span>
+      </div>
+      <div class="bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm text-center">
+        <span id="pending-count" class="text-2xl font-bold text-warning">{{ pending_count }}</span>
+        <span class="block text-xs opacity-60 mt-1">Pending</span>
+      </div>
+      <div class="bg-base-100 p-4 rounded-xl border border-base-200 shadow-sm text-center">
+        <span id="completed-count" class="text-2xl font-bold text-success">{{ completed_count }}</span>
+        <span class="block text-xs opacity-60 mt-1">Completed</span>
+      </div>
+    </div>
+
+    <!-- Task List Grid -->
+    <div id="task-grid" class="grid gap-3">
+      {% for task in tasks %}
+        {% include "todo/partials/task_item.html" %}
+      {% empty %}
+        <c-lb.alert variant="info" class="p-6 text-center">
+          <div>
+            <p class="font-medium text-lg">No tasks found!</p>
+            <p class="text-sm opacity-70 mt-1">You're all caught up. Click "+ Add New Task" above to get started.</p>
+          </div>
+        </c-lb.alert>
+      {% endfor %}
+    </div>
+
+  </div>
+</c-layouts.base>
