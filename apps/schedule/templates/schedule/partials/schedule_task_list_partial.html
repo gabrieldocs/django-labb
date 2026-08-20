@@ -1,8 +1,18 @@
-<div id="task-list-container" class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+<div 
+    id="task-list-container" 
+    hx-swap-oob="true"
+    class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="border-1 bg-green-600 border-green-200 dark:border-green-900 rounded-md p-6 h-full">
+        <h1 class="font-bold text-4xl text-green-100">{{ schedule.remaining_minutes }}m</h1>
+        <p class="text-lg font-semibold">Remaining minutes</p>
+        <p class="text-sm text-green-100">Please, consider this remaining time when planning your
+            next quests.
+        </p>
+
+    </div>
     {% for task in schedule.tasks.all %}
-        {% include 'schedule/partials/schedule_task_item.html' %}
+    {% include 'schedule/partials/schedule_task_item.html' %}
     {% empty %}
-        <p class="text-gray-500 italic col-span-full">No tasks added yet.</p>
+    <p class="text-gray-500 italic col-span-full">No tasks added yet.</p>
     {% endfor %}
 </div>
-

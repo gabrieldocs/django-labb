@@ -56,14 +56,33 @@ def schedule_show(request, pk):
 @login_required 
 def schedule_update(request, pk):
     schedule = get_object_or_404(Schedule, pk=pk)
+    is_modal = bool(request.headers.get('HX-Request'))
     if request.method == 'POST':
         form = ScheduleForm(request.POST, instance=schedule)
         if form.is_valid():
             form.save()
+
+            if is_modal:
+                response = render(request, 'schedule/partials/schedule_header.html', {'schedule': schedule})
+                response['HX-Trigger'] = 'close-schedule-modal'
+                return response
+            
             return redirect('schedule:schedule_list')
+        if is_modal:
+            return render(request, 'schedule/partials/schedule_form_partial.html', {
+                'schedule': schedule, 'form': form, 'is_modal': True
+            })
+        return render(request, 'schedule/schedule_form.html', {
+            'form': form, 'title': 'Edit Schedule', 'schedule': schedule, 'is_modal': False
+        })
     else:
         form = ScheduleForm(instance=schedule)
-    return render(request, 'schedule/schedule_form.html', {'form': form, 'title': 'Edit Schedule'})
+
+    if is_modal:
+        return render(request, 'schedule/partials/schedule_form_partial.html', {
+            'schedule': schedule, 'form': form, 'is_modal': True
+        })
+    return render(request, 'schedule/schedule_form.html', {'form': form, 'title': 'Edit Schedule', 'is_modal': False})
 
 @login_required
 def schedule_create(request):

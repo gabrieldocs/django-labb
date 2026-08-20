@@ -2,41 +2,7 @@
     <div class="max-w-md mx-auto p-6">
         <c-lb.card class="bg-base-100 p-3 shadow-lg border border-base-200">
             <h2 class="text-xl font-bold mb-4"> {{ title }}</h2>
-
-            <form method="post" class="space-y-4">
-                {% csrf_token %}
-
-                <div>
-                    <label class="label"><span class="label-text">Title</span></label>
-                    {{form.title}}
-                    {% if form.title.errors %}
-                    <p class="text-error text-xs mt-1">{{.form.title.errors.0 }}</p>
-                    {% endif %}
-                </div>
-
-                <div>
-                    <label class="label"><span class="label-text">Description</span></label>
-                    {{form.description}}
-                    {% if form.description.errors %}
-                    <p class="text-error text-xs mt-1">{{.form.description.errors.0 }}</p>
-                    {% endif %}
-                </div>
-
-                <div>
-                    <label class="label"><span class="label-text">Total minutes</span></label>
-                    {{form.total_minutes}}
-                    {% if form.total_minutes.errors %}
-                    <p class="text-error text-xs mt-1">{{.form.total_minutes.errors.0 }}</p>
-                    {% endif %}
-                </div>
-
-                <div class="flex justify-end gap-2 mt-6">
-                    <a href="{% url 'schedule:schedule_list' %}">
-                        <c-lb.button variant="ghost" type="button">Cancel</c-lb.button>
-                    </a>
-                    <c-lb.button variant="primary" type="submit">Save Schedule</c-lb.button>
-                </div>
-            </form>
+            {% include 'schedule/partials/schedule_form_partial.html' %}
         </c-lb.card>
     </div>
 </c-layouts.base>

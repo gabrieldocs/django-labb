@@ -2,28 +2,37 @@
 <c-layouts.base>
     <div class="mx-auto max-w-4xl mt-4 mb-4">
         {% if schedule %}
-            <div id="scheduler-header">
-                {% include 'schedule/partials/schedule_header.html' %}
-            </div>  
-            <c-lb.button 
-                class="mt-4"
-                onclick="create_task_modal.showModal()">
-                <c-lbi n="rmx.add" w="24" h="24"/>
-                Add new task
-            </c-lb.button>
+        <div id="scheduler-header">
+            {% include 'schedule/partials/schedule_header.html' %}
+        </div>
+        <c-lb.button 
+            class="mt-4"
+            hx-get="{% url 'schedule:schedule_update' schedule.pk %}"
+            hx-target="#update_schedule_modal_body" 
+            onclick="update_schedule_modal.showModal()">
+            <c-lbi n="rmx.edit-2" w="24" h="24"></c-lbi>
+            Update schedule
+        </c-lb.button>
+        <c-lb.button class="mt-4" onclick="create_task_modal.showModal()">
+            <c-lbi n="rmx.add" w="24" h="24" />
+            Add new task
+        </c-lb.button>
 
-            <c-lb.modal 
-                id="create_task_modal"
-                boxClass="shadow border">
-                {% include 'schedule/partials/schedule_task_form.html' %}
-            </c-lb.modal>
+        <c-lb.modal id="create_task_modal" boxClass="shadow">
+            {% include 'schedule/partials/schedule_task_form.html' %}
+        </c-lb.modal>
 
-            {% include 'schedule/partials/schedule_task_list_partial.html' %}
+        <c-lb.modal id="update_schedule_modal" boxClass="shadow">
+            <div id="update_schedule_modal_body">
+            </div>
+        </c-lb.modal>
+
+        {% include 'schedule/partials/schedule_task_list_partial.html' %}
         {% endif%}
     </div>
     <!-- Script para escutar a resposta HTMX e fechar a modal do daisyUI/Labb -->
     <script>
-        document.body.addEventListener('close-task-modal', function() {
+        document.body.addEventListener('close-task-modal', function () {
             const modal = document.getElementById('create_task_modal');
             if (modal) {
                 // Se o componente labb renderiza um <dialog> nativo:
@@ -33,6 +42,13 @@
                 // Reseta o formulário interno
                 const form = modal.querySelector('form');
                 if (form) form.reset();
+            }
+        });
+
+        document.body.addEventListener('close-schedule-modal', function(){
+            const modal = document.getElementById('update_schedule_modal');
+            if(modal && typeof modal.close === 'function') {
+                modal.close();
             }
         });
     </script>
