@@ -6,9 +6,3 @@
     {% endfor %}
 </div>
 
-{% if request.htmx %}
-    <!-- This ONLY renders during AJAX/HTMX updates, not on initial page load -->
-    <div id="scheduler-header" hx-swap-oob="true">
-        {% include 'schedule/partials/schedule_header.html' %}
-    </div>
-{% endif %}

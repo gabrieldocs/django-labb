@@ -33,7 +33,7 @@ def schedule_show(request, pk):
                 
                 response = render(
                     request, 
-                    'schedule/partials/task_list_partial.html', 
+                    'schedule/partials/schedule_task_created_partial.html', 
                     {'schedule': fresh_schedule}
                 )
                 response['HX-Trigger'] = 'close-task-modal'
