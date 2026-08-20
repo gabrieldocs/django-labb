@@ -1,0 +1,11 @@
+<!-- schedule/partials/schedule_header.html -->
+<h1 class="text-3xl text-green-600 flex font-bold">
+    {{ schedule.title }} <span><c-lbi n="rmx.time" w="24" h="24"/></span> {{ schedule.total_minutes }}m
+</h1>
+<p class="text-secondary text-sm">This schedule was created at {{ schedule.created_at }} and has a total of {{ schedule.remaining_minutes }} minutes remaining.</p>
+<p class="text-md mt-3 text-green-600">{{ schedule.description }}</p>
+<a href="{% url 'schedule:schedule_update' schedule.id %}">
+    <c-lb.button class="bg-green-500 text-green-50 mt-4">
+        <c-lbi n="rmx.edit" w="24" h="24"/> Edit schedule
+    </c-lb.button>
+</a>

@@ -1,0 +1,14 @@
+<div id="task-list-container" class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {% for task in schedule.tasks.all %}
+        {% include 'schedule/partials/schedule_task_item.html' %}
+    {% empty %}
+        <p class="text-gray-500 italic col-span-full">No tasks added yet.</p>
+    {% endfor %}
+</div>
+
+{% if request.htmx %}
+    <!-- This ONLY renders during AJAX/HTMX updates, not on initial page load -->
+    <div id="scheduler-header" hx-swap-oob="true">
+        {% include 'schedule/partials/schedule_header.html' %}
+    </div>
+{% endif %}

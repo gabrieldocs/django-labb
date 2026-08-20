@@ -1,0 +1,17 @@
+<div
+    id="task-{{ task.pk }}"
+    class="border-1 border-green-200 dark:border-green-900 rounded-md p-6 bg-white dark:bg-gray-900 h-full">
+    <h1 class="font-bold text-4xl text-green-600">{{ task.duration_minutes }}m</h1>
+    <p class="text-lg font-semibold">{{ task.title }}</p>
+    {% if task.completed %}
+    <p class="text-sm text-green-600">Completed</p>
+    {% endif %}
+    <p class="text-sm text-secondary">{{ task.description }}</p>
+    <input id="task-completed-{{ task.pk }}"
+        type="checkbox"
+        class="checkbox checkbox-primary"
+        hx-patch="{% url 'schedule:schedule_task_toggle' task.pk %}"
+        hx-target="#task-{{ task.pk }}"
+        hx-swap="outerHTML"
+        {% if task.completed %}checked{% endif %}>
+</div>

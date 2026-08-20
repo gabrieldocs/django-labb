@@ -1,15 +1,21 @@
-<div id="schedule-{{ schedule.pk }}" class="mt-2 border border-gray-100 p-2">
-    <h1 class="text-2xl font-bold">{{ schedule.title }}</h1>
+<div id="schedule-{{ schedule.pk }}" class="mt-2 border-b border-gray-200 dark:border-gray-800 p-2">
+    <div class="flex row space-evenly justify-start items-center gap-4">
+        <h1 class="text-2xl font-bold text-green-600">{{ schedule.title }}</h1>
+        {% if schedule.available %}
+        <c-lb.badge variant="info" size="sm">Available</c-lb.badge>
+        {% else %}
+        <c-lb.badge variant="error" size="sm">Not Available</c-lb.badge>
+        {% endif %}
+    </div>
+
     {% if schedule.description %}
     <p class="text-gray-500">{{ schedule.description }}</p>
 
-    <ol>
-        {% for task in schedule.tasks.all %}
-        <li class="text-sm mt-2 mb-2 text-purple-500">{{ task.title }}</li>
-        {% endfor %}
-    </ol>
     {% endif %}
     <a href="{% url 'schedule:schedule_show' schedule.id %}">
-        <c-lb.button variant="primary">See details</c-bl.button>
+        <c-lb.button variant="ghost" class="mt-4">
+            <c-lbi n="rmx.folder-open" w="18" h="18"></c-lbi>
+            See details
+        </c-lb.button>
     </a>
 </div>

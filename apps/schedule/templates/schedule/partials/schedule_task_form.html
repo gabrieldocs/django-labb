@@ -1,0 +1,61 @@
+<div class="max-w-md mx-auto p-6">
+    <h2 class="text-xl font-bold mb-4">{{ title }}</h2>
+
+    <form 
+        method="post"
+        class="space-y-4"
+        hx-post="{% url 'schedule:schedule_show' schedule.id %}"
+        hx-target="#task-list-container"
+        hx-swap="innerHTML">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-error text-sm shadow-sm">
+          <span>{{ form.non_field_errors.0 }}</span>
+        </div>
+      {% endif %}
+      <div class="hidden">
+        {{ form.schedule }}
+      </div>
+      <!-- Title Input -->
+      <div>
+        <label class="label"><span class="label-text">Task Title</span></label>
+        {{ form.title }}
+        {% if form.title.errors %}
+          <p class="text-error text-xs mt-1">{{ form.title.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Description Input -->
+      <div>
+        <label class="label"><span class="label-text">Description</span></label>
+        {{ form.description }}
+      </div>
+
+      <!-- Duration Input -->
+       <div>
+        <label class="label"><span class="label-text">Duration in minutes</span></label>
+        {{ form.duration_minutes }}
+        {% if form.duration_minutes.errors %}
+        <p class="text-error text-xs mt-1">{{ form.duration_minutes.errors.0 }}</p>
+        {% endif %}
+       </div>
+
+      <!-- Completed Checkbox (only show on edit) -->
+      {% if form.completed %}
+        <div class="form-control">
+          <label class="label cursor-pointer justify-start gap-3">
+            {{ form.completed }}
+            <span class="label-text">Mark as Completed</span>
+          </label>
+        </div>
+      {% endif %}
+
+      <!-- Form Buttons -->
+      <div class="flex justify-end gap-2 mt-6">
+        <c-lb.button variant="ghost" type="button" onclick="create_task_modal.close()">Cancel</c-lb.button>
+        <c-lb.button variant="primary" type="submit">Save Task</c-lb.button>
+        <button type="submit" class="btn btn-primary">Save Task</button>
+      </div>
+    </form>
+  </div>

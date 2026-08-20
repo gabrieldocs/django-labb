@@ -1,32 +1,38 @@
 <c-layouts.base>
     <div class="mx-auto max-w-4xl mt-4 mb-4">
-        <!-- <c-lb.button variant="link">
-            <c-lbi n="rmx.arrow-left" h="18" w="18"/>
-            <span>Retornar</span>
-        </c-lb.button> -->
-        <h1 class="text-2xl font-bold">Details of the {{ title }}</h1>
         {% if schedule %}
-            <h1 class="text-2xl text-purple-500 flex">
-                {{ schedule.title }} <span><c-lbi n="rmx.time" w="24" h="24"/></span> {{ schedule.total_minutes }}m</h1>
-            </span>
-            <small class="text-secondary">{{ schedule.created_at }}</small>
-            <p class="text-sm text-secondary">{{ schedule.description }}</p>
+            <div id="scheduler-header">
+                {% include 'schedule/partials/schedule_header.html' %}
+            </div>  
+            <c-lb.button 
+                class="mt-4"
+                onclick="create_task_modal.showModal()">
+                <c-lbi n="rmx.add" w="24" h="24"/>
+                Add new task
+            </c-lb.button>
 
-            <a href="{% url 'schedule:schedule_update' schedule.id %}">
-                <c-lb.button class="bg-purple-500 text-purple-50 mt-4">
-                    <c-lbi n="rmx.edit" w="24" h="24"/> Edit schedule
-                </c-lb.button>
-            </a>
+            <c-lb.modal 
+                id="create_task_modal"
+                boxClass="shadow border">
+                {% include 'schedule/partials/schedule_task_form.html' %}
+            </c-lb.modal>
 
-            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {% for task in schedule.tasks.all %}
-                    <div class="border-2 border-purple-200 rounded-3xl p-6 bg-white h-full">
-                        <h1 class="font-bold text-4xl text-purple-600">{{ task.duration_minutes }}m</h1>
-                        <p class="text-lg font-semibold">{{ task.title }}</p>
-                        <p class="text-sm text-secondary">{{ task.description }}</p>
-                    </div>
-                {% endfor %}
-            </div>
+            {% include 'schedule/partials/task_list_partial.html' %}
         {% endif%}
     </div>
+    <!-- Script para escutar a resposta HTMX e fechar a modal do daisyUI/Labb -->
+    <script>
+        document.body.addEventListener('close-task-modal', function() {
+            const modal = document.getElementById('create_task_modal');
+            if (modal) {
+                // Se o componente labb renderiza um <dialog> nativo:
+                if (typeof modal.close === 'function') {
+                    modal.close();
+                }
+                // Reseta o formulário interno
+                const form = modal.querySelector('form');
+                if (form) form.reset();
+            }
+        });
+    </script>
 </c-layouts.base>

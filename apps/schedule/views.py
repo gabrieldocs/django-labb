@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 
 from apps.schedule.forms import ScheduleForm
+from apps.todo.forms import TaskForm
 from .models import Schedule
-
+from apps.todo.models import Task
 
 def schedule_list(request):
     schedules = Schedule.objects.filter(user=request.user).order_by('-created_at')
@@ -14,7 +16,41 @@ def schedule_list(request):
 
 def schedule_show(request, pk):
     schedule = get_object_or_404(Schedule, pk=pk, user=request.user)
-    context = { 'schedule': schedule, 'title': schedule.title}
+
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.user = request.user
+            task.schedule = schedule
+            task.save()
+            
+            if request.headers.get('HX-Request'):
+                # 💡 RE-FETCH THE SCHEDULE FRESH FROM DB
+                # This clears the ORM cache and forces recalculation of remaining_minutes
+                fresh_schedule = Schedule.objects.get(pk=pk, user=request.user)
+                
+                response = render(
+                    request, 
+                    'schedule/partials/task_list_partial.html', 
+                    {'schedule': fresh_schedule}
+                )
+                response['HX-Trigger'] = 'close-task-modal'
+                return response 
+            
+            return redirect('schedule:schedule_show', pk=schedule.pk)
+        
+        if request.headers.get('HX-Request'):
+            return render(request, 'schedule/partials/schedule_task_form.html', {
+                'schedule': schedule,
+                'form': form,
+                'title': schedule.title
+            })
+    else:
+        form = TaskForm()
+
+    context = { 'schedule': schedule, 'title': schedule.title, 'form': form }
     return render(request, "schedule/schedule_show.html", context)
 
 @login_required 
@@ -41,3 +77,16 @@ def schedule_create(request):
     else:
         form = ScheduleForm()
     return render(request, 'schedule/schedule_form.html', {'form': form, 'title': 'Create Schedule'})
+
+@login_required
+@require_http_methods(["PATCH"])
+def schedule_task_toggle(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.completed = not task.completed
+    task.save()
+    
+    context = {
+        'task': task,
+    }
+    
+    return render(request, 'schedule/partials/schedule_task_item.html', context)
