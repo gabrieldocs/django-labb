@@ -63,7 +63,7 @@ def schedule_update(request, pk):
             form.save()
 
             if is_modal:
-                response = render(request, 'schedule/partials/schedule_header.html', {'schedule': schedule})
+                response = render(request, 'schedule/partials/schedule_task_created_partial.html', {'schedule': schedule})
                 response['HX-Trigger'] = 'close-schedule-modal'
                 return response
             
