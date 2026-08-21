@@ -1,15 +1,26 @@
-<div id="schedule-{{ schedule.pk }}" class="mt-2 border border-gray-100 p-2">
-    <h1 class="text-2xl font-bold">{{ schedule.title }}</h1>
-    {% if schedule.description %}
-    <p class="text-gray-500">{{ schedule.description }}</p>
+<div id="schedule-{{ schedule.pk }}"
+    class="mt-2 rounded-3xl dark:border-gray-800 p-4 bg-green-600 flex flex-col justify-between h-full min-h-[250]">
+    <div class="flex flex-col gap4">
+        <div class="h-28">
+            <h1 class="text-4xl text-green-100 font-bold dark:text-green-100">{{ schedule.title }}</h1>
+            <h1>Remaining {{ schedule.remaining_minutes }}m of {{ schedule.total_minutes }}m</h1>
+        </div>
+        <!-- {% if schedule.available %}
+        <c-lb.badge variant="info" size="sm">Available</c-lb.badge>
+        {% else %}
+        <c-lb.badge variant="error" size="sm">Not Available</c-lb.badge>
+        {% endif %} -->
 
-    <ol>
-        {% for task in schedule.tasks.all %}
-        <li class="text-sm mt-2 mb-2 text-purple-500">{{ task.title }}</li>
-        {% endfor %}
-    </ol>
-    {% endif %}
-    <a href="{% url 'schedule:schedule_show' schedule.id %}">
-        <c-lb.button variant="primary">See details</c-bl.button>
-    </a>
+        {% if schedule.description %}
+        <p class="text-green-100 mt-4 mb-4 first-letter:text-5xl first-letter:float-left first-letter:mr-2 first-letter:leading-none">{{ schedule.description|capfirst }}</p>
+        {% endif %}
+    </div>
+    <div class="flex flex-row justify-end items-end">
+        <a href="{% url 'schedule:schedule_show' schedule.id %}">
+            <c-lb.button variant="text" class="mt-4 rounded-xl dark:border-0 dark:bg-green-800 dark:text-green-100">
+                <c-lbi n="rmx.folder-open" w="18" h="18"></c-lbi>
+                See details
+            </c-lb.button>
+        </a>
+    </div>
 </div>

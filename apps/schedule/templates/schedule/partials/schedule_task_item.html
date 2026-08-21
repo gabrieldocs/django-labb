@@ -1,0 +1,35 @@
+<div id="task-{{ task.pk }}" class="
+    border-green-200 
+    rounded-3xl 
+    p-6 
+    bg-gray-100 
+    dark:bg-gray-900 
+    h-full
+    flex 
+    flex-col
+    justify-between">
+    <h1 class="font-bold text-4xl text-green-600 dark:text-green-600">
+        <span>
+            {{ task.duration_minutes }}m
+        </span>
+    </h1>
+    <p class="text-lg font-semibold mt-2 mb-2 {% if task.completed %} line-through {% endif %} cursor-pointer"
+        hx-patch="{% url 'schedule:schedule_task_toggle' task.pk %}" hx-target="#task-{{ task.pk }}" hx-swap="outerHTML"
+        {% if task.completed %}checked{% endif %}>
+        <input id="task-completed-{{ task.pk }}" type="checkbox" class="checkbox checkbox-primary mr-2"
+            hx-patch="{% url 'schedule:schedule_task_toggle' task.pk %}" hx-target="#task-{{ task.pk }}"
+            hx-swap="outerHTML" {% if task.completed %}checked{% endif %}>
+        <span>{{ task.title }}</span>
+    </p>
+    {% if task.completed %}
+    <p class="text-sm text-green-600">Completed</p>
+    {% else %}
+    <p class="text-sm text-orange-400">Pending</p>
+    {% endif %}
+    <p
+        class="text-sm mt-2 mb-4 text-gray-800 dark:text-secondary first-letter:capilatize first-letter:text-4xl first-letter:float-left first-letter:mr-2">
+        {{ task.description }}</p>
+    <div>
+        <c-lb.button variant="ghost" class="rounded-xl">Edit</c-button>
+    </div>
+</div>

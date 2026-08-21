@@ -1,0 +1,46 @@
+<form 
+    {% if is_modal %}
+        hx-post="{% url 'schedule:schedule_update' schedule.pk %}"
+        hx-target="#update_schedule_modal_body"
+        hx-swap="innerHTML"
+    {% else %}
+        method="post"
+    {% endif %} 
+    class="space-y-4">
+    {% csrf_token %}
+
+    <div>
+        <label class="label"><span class="label-text">Title</span></label>
+        {{form.title}}
+        {% if form.title.errors %}
+        <p class="text-error text-xs mt-1">{{ form.title.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <label class="label"><span class="label-text">Description</span></label>
+        {{form.description}}
+        {% if form.description.errors %}
+        <p class="text-error text-xs mt-1">{{ form.description.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <label class="label"><span class="label-text">Total minutes</span></label>
+        {{form.total_minutes}}
+        {% if form.total_minutes.errors %}
+        <p class="text-error text-xs mt-1">{{ form.total_minutes.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <div class="flex justify-end gap-2 mt-6">
+        {% if is_modal%}
+            <c-lb.button variant="ghost" type="button" onclick="update_schedule_modal.close()">Cancel</c-lb.button>
+        {% else %}
+        <a href="{% url 'schedule:schedule_list' %}">
+            <c-lb.button variant="ghost" type="button">Cancel</c-lb.button>
+        </a>
+        {% endif %}
+        <c-lb.button variant="primary" type="submit">Save Schedule</c-lb.button>
+    </div>
+</form>

@@ -12,7 +12,7 @@
                 </c-lb.button>
             </a>
         </div>
-        <div class="grid grid-row">
+        <div class="grid grid-cols-2 gap-4">
             {% for schedule in schedules %}
                 {% include "schedule/partials/schedule_item.html" %}
             {% empty%}
