@@ -2,7 +2,7 @@
     class="mt-2 rounded-3xl dark:border-gray-800 p-4 bg-green-600 flex flex-col justify-between h-full min-h-[250]">
     <div class="flex flex-col gap4">
         <div class="h-28">
-            <h1 class="text-4xl text-green-100 font-bold dark:text-gray-500">{{ schedule.title }}</h1>
+            <h1 class="text-4xl text-green-100 font-bold dark:text-green-100">{{ schedule.title }}</h1>
             <h1>Remaining {{ schedule.remaining_minutes }}m of {{ schedule.total_minutes }}m</h1>
         </div>
         <!-- {% if schedule.available %}
@@ -17,7 +17,7 @@
     </div>
     <div class="flex flex-row justify-end items-end">
         <a href="{% url 'schedule:schedule_show' schedule.id %}">
-            <c-lb.button variant="ghost" class="mt-4">
+            <c-lb.button variant="text" class="mt-4 rounded-xl dark:border-0 dark:bg-green-800 dark:text-green-100">
                 <c-lbi n="rmx.folder-open" w="18" h="18"></c-lbi>
                 See details
             </c-lb.button>
