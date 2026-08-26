@@ -12,7 +12,7 @@ def schedule_list(request):
     context = {
         'schedules': schedules
     }
-    return render(request, "schedule/schedule_list.html", context)
+    return render(request, "schedule/pages/schedule_index.html", context)
 
 def schedule_show(request, pk):
     schedule = get_object_or_404(Schedule, pk=pk, user=request.user)
@@ -51,7 +51,7 @@ def schedule_show(request, pk):
         form = TaskForm()
 
     context = { 'schedule': schedule, 'title': schedule.title, 'form': form }
-    return render(request, "schedule/schedule_show.html", context)
+    return render(request, "schedule/pages/schedule_show.html", context)
 
 @login_required 
 def schedule_update(request, pk):
@@ -72,7 +72,7 @@ def schedule_update(request, pk):
             return render(request, 'schedule/partials/schedule_form_partial.html', {
                 'schedule': schedule, 'form': form, 'is_modal': True
             })
-        return render(request, 'schedule/schedule_form.html', {
+        return render(request, 'schedule/pages/schedule_form.html', {
             'form': form, 'title': 'Edit Schedule', 'schedule': schedule, 'is_modal': False
         })
     else:
@@ -82,7 +82,7 @@ def schedule_update(request, pk):
         return render(request, 'schedule/partials/schedule_form_partial.html', {
             'schedule': schedule, 'form': form, 'is_modal': True
         })
-    return render(request, 'schedule/schedule_form.html', {'form': form, 'title': 'Edit Schedule', 'is_modal': False})
+    return render(request, 'schedule/pages/schedule_form.html', {'form': form, 'title': 'Edit Schedule', 'is_modal': False})
 
 @login_required
 def schedule_create(request):
@@ -95,7 +95,7 @@ def schedule_create(request):
             return redirect('schedule:schedule_list')
     else:
         form = ScheduleForm()
-    return render(request, 'schedule/schedule_form.html', {'form': form, 'title': 'Create Schedule'})
+    return render(request, 'schedule/pages/schedule_form.html', {'form': form, 'title': 'Create Schedule'})
 
 @login_required
 @require_http_methods(["PATCH"])

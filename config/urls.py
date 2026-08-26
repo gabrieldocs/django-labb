@@ -20,6 +20,8 @@ from django.urls import include, path
 urlpatterns = [    
     path("", include("web.urls")),
     path('admin/', admin.site.urls),
+    path('api-auth/', include("rest_framework.urls", namespace="rest_framework")),
+    path('api/schedules/', include('apps.schedule.api')),
     path('accounts/', include('django.contrib.auth.urls')),  # Provides /accounts/login/, /accounts/logout/, etc.
     path('todo/', include('apps.todo.urls', namespace='todo')),
     path('schedule/', include('apps.schedule.urls', namespace='schedule')),
