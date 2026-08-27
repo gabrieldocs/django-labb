@@ -9,16 +9,23 @@ from django.contrib.auth.decorators import login_required
 # READ (List)
 @login_required
 def task_list(request):
-    tasks = Task.objects.filter(user=request.user).order_by('-created_at')
-    total_count = tasks.count()
-    pending_count = tasks.filter(completed=False).count()
-    completed_count = tasks.filter(completed=True).count()
-    return render(request, 'todo/task_list.html', {
-        'tasks': tasks,
+    user_tasks = Task.objects.filter(user=request.user).order_by('-created_at')
+    schedules = Schedule.objects.filter(user=request.user).prefetch_related('tasks')
+    unassigned_tasks = user_tasks.filter(schedule__isnull=True).order_by('-created_at')
+
+    total_count = user_tasks.count()
+    pending_count = user_tasks.filter(completed=False).count()
+    completed_count = user_tasks.filter(completed=True).count()
+
+    context = {
+        'schedules': schedules,
+        'unassigned_tasks': unassigned_tasks,
         'total_count': total_count,
         'pending_count': pending_count,
         'completed_count': completed_count,
-    })
+    }
+
+    return render(request, 'todo/pages/task_list.html', context)
 
 # CREATE
 @login_required
@@ -32,7 +39,7 @@ def task_create(request):
             return redirect('todo:task_list')
     else:
         form = TaskForm()
-    return render(request, 'todo/task_form.html', {'form': form, 'title': 'Create Task'})
+    return render(request, 'todo/pages/task_form.html', {'form': form, 'title': 'Create Task'})
 
 # UPDATE
 @login_required
@@ -54,7 +61,7 @@ def task_delete(request, pk):
     if request.method == 'POST':
         task.delete()
         return redirect('todo:task_list')
-    return render(request, 'todo/task_confirm_delete.html', {'task': task})
+    return render(request, 'todo/pages/task_confirm_delete.html', {'task': task})
 
 @login_required
 @require_http_methods(["PATCH"])

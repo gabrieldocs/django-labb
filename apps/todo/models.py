@@ -9,11 +9,20 @@ class Task(models.Model):
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
+    startd_at = models.DateTimeField(null=True, blank=True, default=None)
+    finished_at = models.DateTimeField(null=True, blank=True, default=None)
     completed = models.BooleanField(default=False)
     duration_minutes = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def elapsed_minutes(self):
+        if self.startd_at and self.finished_at:
+            duration = self.finished_at - self.startd_at
+            return int(duration.total_seconds() / 60)
+        return 0
+    
     def __str__(self):
         return f"{self.title} ({self.duration_minutes}m)"
 
