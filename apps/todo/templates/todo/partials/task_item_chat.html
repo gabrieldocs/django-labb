@@ -1,0 +1,78 @@
+<div id="task-{{ task.pk }}">
+  <c-lb.chat placement="start" class="mt-4 mb-4">
+    <c-lb.chat.image
+      src="https://www.gamevicio.com/wp-content/uploads/2026/06/Black-Myth-Wukong-1068x600.jpg"></c-lb.chat.image>
+    <c-lb.chat.header>
+      {{ user.username }} 
+      <time datetime="{{ task.created_at }}">
+        {{ task.created_at}}
+      </time>
+    </c-lb.chat.header>
+    <c-lb.chat.bubble class="bg-green-600">
+      <div class="flex items-center gap-2">
+        <div>
+          <input 
+            id="task-completed-{{ task.pk }}" 
+            type="checkbox" 
+            class="checkbox checkbox-primary checkbox-sm"
+            hx-patch="{% url 'todo:task_toggle' task.pk %}" 
+            hx-target="#task-{{ task.pk }}" 
+            hx-swap="outerHTML" 
+            {% if task.completed %}checked{% endif %} />
+        </div>
+        <h2 class="text-lg text-green-100  font-semibold {% if task.completed %}line-through opacity-60{% endif %}">
+          {{ task.title }}
+        </h2>
+        <!-- {% if task.duration_minutes %}
+        <c-lb.badge variant="info" size="sm">
+          <c-lbi n="rmx.time" w="18" h="18"></c-lbi>
+          {{ task.duration_minutes }}m
+        </c-lb.badge>
+        {% endif %}
+        {% if task.completed %}
+        <c-lb.badge variant="success" size="sm">
+          <c-lbi n="rmx.check-double" w="18" h="18"></c-lbi>
+          Completed
+        </c-lb.badge>
+        {% endif %} -->
+      </div>
+
+      {% if task.description %}
+      <p class="text-sm text-green-100 opacity-70 mt-1">{{ task.description }}</p>
+      {% endif %}
+
+      <!-- HTMX Toggle Checkbox -->
+      <!-- Actions -->
+      <div class="flex gap-2 mt-4 mb-1">
+        <a href="{% url 'todo:task_update' task.pk %}">
+          <c-lb.button variant="ghost" size="sm">
+            <c-lbi n="rmx.edit" w="18" h="18"></c-lbi>
+            Edit
+          </c-lb.button>
+        </a>
+        <c-lb.button variant="ghost" size="sm" hx-delete="{% url 'todo:task_delete' task.pk %}"
+          hx-target="#task-{{ task.pk }}" hx-swap="outerHTML">
+          <c-lbi n="rmx.delete-bin" w="18" h="18"></c-lbi>
+          Delete
+        </c-lb.button>
+        <c-lb.button size="sm">
+          <c-lbi w="18" h="18" n="rmx.chat-1"></c-lbi>
+          Answer
+        </c-lb.button>
+      </div>
+    </c-lb.chat.bubble>
+  </c-lb.chat>
+  {% for note in task.tasknote_set.all %}
+  <c-lb.chat placement="end" class="mt-4 mb-4">
+    <c-lb.chat.header>
+     Note for this task: 
+      <time datetime="{{ note.created_at }}">
+        {{ task.created_at}}
+      </time>
+    </c-lb.chat.header>
+    <c-lb.chat.bubble>
+      {{note.note }}
+    </c-lb.chat.bubble>
+  </c-lb.chat>
+  {% endfor %}
+</div>

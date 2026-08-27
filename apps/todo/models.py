@@ -41,3 +41,12 @@ class Task(models.Model):
                 f"Cannot add task ({self.duration_minutes}m)"
                 f"Only {max(0, remaining)}m remaining time in schedule"
             )
+
+class TaskNote(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE,)
+    note = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.task.title} -- { self.note }'

@@ -52,7 +52,7 @@ def task_update(request, pk):
             return redirect('todo:task_list')
     else:
         form = TaskForm(instance=task)
-    return render(request, 'todo/task_form.html', {'form': form, 'title': 'Edit Task'})
+    return render(request, 'todo/pages/task_form.html', {'form': form, 'title': 'Edit Task'})
 
 # DELETE
 @login_required

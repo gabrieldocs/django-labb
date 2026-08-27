@@ -24,6 +24,7 @@
     --color-teal-600: oklch(60% 0.118 184.704);
     --color-teal-900: oklch(38.6% 0.063 188.416);
     --color-blue-100: oklch(93.2% 0.032 255.585);
+    --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-900: oklch(37.9% 0.146 265.522);
     --color-purple-100: oklch(94.6% 0.033 307.174);
     --color-purple-900: oklch(38.1% 0.176 304.987);
@@ -3602,6 +3603,9 @@
       }
     }
   }
+  .end {
+    inset-inline-end: var(--spacing);
+  }
   .dropdown-top {
     @layer daisyui.l1.l2 {
       --anchor-v: top;
@@ -4204,6 +4208,12 @@
   .col-span-2 {
     grid-column: span 2 / span 2;
   }
+  .col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+  .col-span-4 {
+    grid-column: span 4 / span 4;
+  }
   .col-span-full {
     grid-column: 1 / -1;
   }
@@ -4475,6 +4485,9 @@
   }
   .row-span-3 {
     grid-row: span 3 / span 3;
+  }
+  .row-span-4 {
+    grid-row: span 4 / span 4;
   }
   .chat-footer {
     @layer daisyui.l1.l2.l3 {
@@ -4892,6 +4905,9 @@
       opacity: 60%;
       font-weight: 600;
     }
+  }
+  .mb-1 {
+    margin-bottom: calc(var(--spacing) * 1);
   }
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
@@ -6348,6 +6364,12 @@
   }
   .bg-blue-100 {
     background-color: var(--color-blue-100);
+  }
+  .bg-blue-600 {
+    background-color: var(--color-blue-600);
+  }
+  .bg-blue-900 {
+    background-color: var(--color-blue-900);
   }
   .bg-error {
     background-color: var(--color-error);
